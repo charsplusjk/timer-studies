@@ -3,16 +3,29 @@ import Botao from "../Botao";
 import style from './Formulario.module.scss';
 
 class Formulario extends React.Component {
+    
+    state ={ 
+        tarefa: "",
+        tempo: "00:00"
+    }
+
+    adicionarTarefa(evento: React.FormEvent<HTMLFormElement>) {
+        evento.preventDefault();
+        console.log('stare: ', this.state)
+    }
+
     render() {
         return (
-            <form className={style.novaTarefa}>
+            <form className={style.novaTarefa} onSubmit={this.adicionarTarefa.bind(this)}>
                 <div className={style.inputContainer}>
                     <label htmlFor="tarefa">
                         Informe a matéria
                     </label>
                     <input 
                         type="text" 
-                        name="tarefa" 
+                        name="tarefa"
+                        value={this.state.tarefa}
+                        onChange={evento => this.setState({ ...this.state, tarefa: evento.target.value})}
                         id="tarefa" 
                         placeholder="Matéria" 
                         required
@@ -26,7 +39,9 @@ class Formulario extends React.Component {
                     <input 
                         type="time" 
                         step="1" 
-                        name="tempo" 
+                        name="tempo"
+                        value={this.state.tempo}
+                        onChange={evento => this.setState({ ...this.state, tempo: evento.target.value})}
                         id="tempo" 
                         min="00:00:00" 
                         max="01:30:00" 
@@ -34,8 +49,8 @@ class Formulario extends React.Component {
                     />
                 </div>
                 <Botao>
-			Adicionar
-		</Botao>
+			        Adicionar
+		        </Botao>
             </form>
         )
     }
